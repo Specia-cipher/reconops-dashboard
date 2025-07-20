@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReconOps Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🕵️ ReconOps Dashboard</h1>
+        <nav>
+            <a href="{{ url_for('main.home') }}">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Child templates will inject content here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ReconOps | Built with ❤️ by Sanni Idris</p>
+    </footer>
+</body>
+</html>
