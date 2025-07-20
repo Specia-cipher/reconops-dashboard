@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>🔍 Scan Target</h2>
+<form method="POST">
+    <label for="target">Target (IP or Domain):</label>
+    <input type="text" id="target" name="target" required>
+    <button type="submit">Run Scan</button>
+</form>
+
+{% if scan_result %}
+<h3>📋 Scan Results:</h3>
+<pre>{{ scan_result }}</pre>
+{% endif %}
+{% endblock %}

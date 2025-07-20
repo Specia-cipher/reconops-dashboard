@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, flash
+from reconops_dashboard.utils.scan_engine import run_nmap_scan
 
 main = Blueprint('main', __name__)
 
@@ -6,9 +7,16 @@ main = Blueprint('main', __name__)
 def home():
     return render_template('home.html')
 
-@main.route('/scan')
+@main.route('/scan', methods=['GET', 'POST'])
 def scan():
-    return render_template('scan.html')
+    scan_result = None
+    if request.method == 'POST':
+        target = request.form.get('target')
+        if target:
+            scan_result = run_nmap_scan(target)
+        else:
+            flash("Please provide a target to scan.", "warning")
+    return render_template('scan.html', scan_result=scan_result)
 
 @main.route('/results')
 def results():
