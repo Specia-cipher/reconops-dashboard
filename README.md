@@ -1,208 +1,160 @@
-# 🕵️ ReconOps Dashboard
+# ReconOps Dashboard
 
-A modular, Flask-powered dashboard for reconnaissance operations. Designed for cybersecurity professionals and enthusiasts who need an all-in-one tool for scanning, reporting, and analysis.
+![ReconOps Logo](https://user-images.githubusercontent.com/your-github-username/reconops-dashboard-logo.png)
+
+_A modular network reconnaissance web app built with Flask, Flask-WTF, and Bootstrap 5._
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 
+- [About](#about)
 - [Features](#features)
-- [Next Milestones](#next-milestones)
-- [Tech Stack](#tech-stack)
-- [Quick Start](#quick-start)
-- [Screenshots](#screenshots)
-- [Author](#author)
+- [Planned Roadmap](#planned-roadmap)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
 - [License](#license)
+- [About the Author](#about-the-author)
 
 ---
 
-## 🚀 Features
+## About
 
-- ✅ Modular Flask application structure (Blueprints, Utils, Models)
-- ✅ SQLite3 database integration via SQLAlchemy
-- ✅ Nmap scanning engine (run scans directly from dashboard)
-- ✅ Persist scan results with timestamps
-- ✅ Clean UI (Bootstrap 5 + Jinja templates)
-- ✅ Dynamic results page showing historical scans
-- ✅ Flash notifications for user feedback
-- ✅ Version controlled for easy collaboration
+ReconOps Dashboard is a network reconnaissance utility that provides a user-friendly web interface for initiating and viewing Nmap scan results and system logs. Designed with modularity and security at its core, ReconOps aims to serve as a foundation for exploring modern back-end, security, and deployment workflows.
 
 ---
 
-## 🔥 Next Milestones
+## Features
 
-- 🔒 **User Authentication**
-  - Multi-user support with role-based access
-- 📜 **Logs Page**
-  - Display system and scan logs with filters
-- ⚙️ **Settings Page**
-  - User preferences and scan configurations
-- 📦 **Containerization**
-  - Dockerfile & docker-compose for deployment
-- 📊 **Visualization**
-  - Charts and graphs for scan analytics
-- 🌐 **Deployment**
-  - Push to a live server (Heroku, Render, or VPS)
+- **CSRF-Protected Flask-WTF Forms:**  
+  Ensures every web form is secure against CSRF attacks.
 
----
+- **Nmap Scan Integration:**  
+  Quickly perform Nmap scans on domains/IPs and view the output directly in the dashboard.
 
-## 🛠️ Tech Stack
+- **Persistent Scan Records:**  
+  All scan results are stored in a database with timestamps for audit purposes.
 
-- **Python 3.10**
-- **Flask 3.x**
-- **SQLAlchemy**
-- **Nmap**
-- **Bootstrap 5**
-- **Jinja2**
+- **System Logging:**  
+  Tracks user actions and scan events for basic auditing.
+
+- **Responsive UI with Bootstrap 5:**  
+  Clean interface for laptops and mobile devices.
 
 ---
 
-## ⚡ Quick Start
+## Planned Roadmap
 
-```bash
-# Clone the repository
+We will focus on implementing the following key features in the next phases of development. This roadmap demonstrates an understanding of real-world workflows and highlights skills relevant to employers.
+
+### Next Major Features (In Active Development)
+
+| Feature                  | Why It Matters                                       | Timeline       |
+|--------------------------|------------------------------------------------------|----------------|
+| **User Authentication**  | Realistic access control & user management            | Next major     |
+| **Scan History per User**| Data persistence and personalized audit trail         | In progress    |
+| **Result Export (CSV/JSON)** | Provides practical server-side file handling and reporting | Near future    |
+| **Dockerization**         | Modern deployment practices and environment consistency | Near future    |
+
+### Near-Future & Optional Enhancements
+
+| Feature                     | Value to Employers and Users                           | Timeline  |
+|-----------------------------|--------------------------------------------------------|-----------|
+| **Advanced Scan Options**   | UI and backend flexibility allowing customized scans  | Optional  |
+| **Simple REST API Endpoints**| Backend extensibility, service-oriented architecture  | Optional  |
+| **Enhanced Audit Logging**  | Improved monitoring, security, and operational insight | Stretch   |
+| **Custom User Settings**     | User experience enhancement and application extensibility | Stretch   |
+
+---
+
+## Installation
+
+### Prerequisites
+
+- Python 3.8+ (recommended: venv)
+- pip
+- [Nmap](https://nmap.org/download.html) installed on your system
+- Git
+
+### Steps
+
 git clone https://github.com/Specia-cipher/reconops-dashboard.git
 cd reconops-dashboard
-
-# Set up virtual environment
 python3 -m venv venv
 source venv/bin/activate
-
-# Install dependencies
 pip install -r requirements.txt
 
-# Initialize the database
-flask shell
->>> from reconops_dashboard import db
->>> db.create_all()
->>> exit()
-
-# Run the application
+Configure your .env or environment variables if needed
+flask db upgrade # Sets up the database
 python app.py
-Visit the dashboard: http://127.0.0.1:5000
 
-📸 Screenshots
-Dashboard
+text
 
-Scan Results
-
-👨‍💻 Author
-Sanni Idris
-🌐 LinkedIn Profile
-📁 GitHub Repository
-📧 Email Me
-
-Built with love by Sanni Idris.
-
-📜 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-yaml
-Copy
-Edit
+Access the app at [http://localhost:5000](http://localhost:5000)
 
 ---
 
-### 🔥 Nuking Command for Old README
+## Usage
 
-```bash
-cat > README.md << 'EOF'
-# 🕵️ ReconOps Dashboard
+- Enter a target IP or domain and click "Run Scan"
+- View scan results and logs via navigation links
+- All user actions and scan records are saved for traceability
 
-A modular, Flask-powered dashboard for reconnaissance operations. Designed for cybersecurity professionals and enthusiasts who need an all-in-one tool for scanning, reporting, and analysis.
-
----
-
-## 📑 Table of Contents
-
-- [Features](#features)
-- [Next Milestones](#next-milestones)
-- [Tech Stack](#tech-stack)
-- [Quick Start](#quick-start)
-- [Screenshots](#screenshots)
-- [Author](#author)
-- [License](#license)
+*Note: After planned authentication is added, features will become user-dependent!*
 
 ---
 
-## 🚀 Features
+## Project Structure
 
-- ✅ Modular Flask application structure (Blueprints, Utils, Models)
-- ✅ SQLite3 database integration via SQLAlchemy
-- ✅ Nmap scanning engine (run scans directly from dashboard)
-- ✅ Persist scan results with timestamps
-- ✅ Clean UI (Bootstrap 5 + Jinja templates)
-- ✅ Dynamic results page showing historical scans
-- ✅ Flash notifications for user feedback
-- ✅ Version controlled for easy collaboration
+reconops-dashboard/
+│
+├── app.py
+├── requirements.txt
+├── reconops_dashboard/
+│ ├── init.py
+│ ├── models.py
+│ ├── routes/
+│ │ ├── main_routes.py
+│ │ └── settings_routes.py
+│ ├── templates/
+│ │ ├── base.html
+│ │ ├── scan.html
+│ │ ├── results.html
+│ │ ├── logs.html
+│ │ └── settings.html
+│ ├── utils/
+│ │ ├── scan_engine.py
+│ │ ├── forms.py
+│ │ ├── db_helper.py
+│ │ ├── log_helper.py
+│ │ └── settings_helper.py
+│ └── static/
+└── instance/
+└── reconops.db
 
----
-
-## 🔥 Next Milestones
-
-- 🔒 **User Authentication**
-  - Multi-user support with role-based access
-- 📜 **Logs Page**
-  - Display system and scan logs with filters
-- ⚙️ **Settings Page**
-  - User preferences and scan configurations
-- 📦 **Containerization**
-  - Dockerfile & docker-compose for deployment
-- 📊 **Visualization**
-  - Charts and graphs for scan analytics
-- 🌐 **Deployment**
-  - Push to a live server (Heroku, Render, or VPS)
-
----
-
-## 🛠️ Tech Stack
-
-- **Python 3.10**
-- **Flask 3.x**
-- **SQLAlchemy**
-- **Nmap**
-- **Bootstrap 5**
-- **Jinja2**
+text
 
 ---
 
-## ⚡ Quick Start
+## Contributing
 
-```bash
-# Clone the repository
-git clone https://github.com/Specia-cipher/reconops-dashboard.git
-cd reconops-dashboard
+Pull requests and feedback are welcome!  
+See [CONTRIBUTING.md](https://github.com/Specia-cipher/reconops-dashboard/blob/main/CONTRIBUTING.md) for details.
 
-# Set up virtual environment
-python3 -m venv venv
-source venv/bin/activate
+---
 
-# Install dependencies
-pip install -r requirements.txt
+## License
 
-# Initialize the database
-flask shell
->>> from reconops_dashboard import db
->>> db.create_all()
->>> exit()
+This project is licensed under the MIT License.
 
-# Run the application
-python app.py
-Visit the dashboard: http://127.0.0.1:5000
+---
 
-📸 Screenshots
-Dashboard
+## About the Author
 
-Scan Results
-
-👨‍💻 Author
-Sanni Idris
-🌐 LinkedIn Profile : https://www.linkedin.com/in/sanni-idris-89917a262/
-📁 GitHub Repository : https://github.com/Specia-cipher
-📧 Email Me : sannifreelancer6779@gmail.com
-
-Built with love by Sanni Idris.
-
-📜 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+**Specia-cipher (gen-cipher)**  
+- GitHub: [Specia-cipher](https://github.com/Specia-cipher)  
+- Email: [your.email@example.com]  
+- Project assembled with a focus on robust back-end design, security, and real-world workflows.
 
