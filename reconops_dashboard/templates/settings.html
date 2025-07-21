@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">⚙️ Dashboard Settings</h2>
+    <form method="POST" action="{{ url_for('settings.settings') }}">
+        <div class="mb-3">
+            <label for="scan_timeout" class="form-label">Scan Timeout (seconds)</label>
+            <input type="number" class="form-control" id="scan_timeout" name="scan_timeout" value="{{ settings.scan_timeout }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="scan_flags" class="form-label">Scan Flags</label>
+            <input type="text" class="form-control" id="scan_flags" name="scan_flags" value="{{ settings.scan_flags }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+    </form>
+</div>
+{% endblock %}

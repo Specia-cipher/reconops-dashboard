@@ -1,14 +1,21 @@
 {% extends "base.html" %}
+
 {% block content %}
 <h2>🔍 Scan Target</h2>
+
 <form method="POST">
-    <label for="target">Target (IP or Domain):</label>
-    <input type="text" id="target" name="target" required>
-    <button type="submit">Run Scan</button>
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        {{ form.target.label(class="form-label") }}
+        {{ form.target(class="form-control", placeholder="Enter IP or Domain") }}
+    </div>
+    <div>
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
 </form>
 
 {% if scan_result %}
-<h3>📋 Scan Results:</h3>
+<h3 class="mt-4">📋 Scan Results:</h3>
 <pre>{{ scan_result }}</pre>
 {% endif %}
 {% endblock %}

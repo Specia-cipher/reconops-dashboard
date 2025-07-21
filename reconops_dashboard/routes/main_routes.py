@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from reconops_dashboard.utils.scan_engine import run_nmap_scan
-from reconops_dashboard.models import ScanResult
-from reconops_dashboard import db
+from flask import Blueprint, render_template, redirect, url_for, flash
+from reconops_dashboard.models import ScanResult, SystemLog
+from reconops_dashboard.utils.scan_engine import run_scan
+from reconops_dashboard.utils.db_helper import save_scan_result, save_system_log
+from reconops_dashboard.utils.forms import ScanForm
 
 main = Blueprint('main', __name__)
 
@@ -11,23 +12,17 @@ def home():
 
 @main.route('/scan', methods=['GET', 'POST'])
 def scan():
-    if request.method == 'POST':
-        target = request.form.get('target')
-        if target:
-            # Run the scan
-            output = run_nmap_scan(target)
-
-            # Save to database
-            new_scan = ScanResult(target=target, scan_output=output)
-            db.session.add(new_scan)
-            db.session.commit()
-
-            flash('Scan completed and saved successfully!', 'success')
-            return redirect(url_for('main.results'))
-        else:
-            flash('Please enter a valid target (IP or domain).', 'warning')
-
-    return render_template('scan.html')
+    form = ScanForm()
+    if form.validate_on_submit():
+        target = form.target.data
+        output = run_scan(target)
+        save_scan_result(target, output)
+        save_system_log('INFO', f"Scan completed for target: {target}")
+        flash('Scan completed and saved successfully!', 'success')
+        return redirect(url_for('main.results'))
+    elif form.is_submitted():
+        flash('Please provide a valid target.', 'warning')
+    return render_template('scan.html', form=form)
 
 @main.route('/results')
 def results():
@@ -36,8 +31,5 @@ def results():
 
 @main.route('/logs')
 def logs():
-    return render_template('logs.html')
-
-@main.route('/settings')
-def settings():
-    return render_template('settings.html')
+    logs = SystemLog.query.order_by(SystemLog.timestamp.desc()).all()
+    return render_template('logs.html', logs=logs)

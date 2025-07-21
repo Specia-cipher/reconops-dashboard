@@ -29,7 +29,8 @@
                         <a class="nav-link" href="{{ url_for('main.logs') }}">Logs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.settings') }}">Settings</a>
+                        <!-- Fixed: call the correct blueprint endpoint -->
+                        <a class="nav-link" href="{{ url_for('settings.settings') }}">Settings</a>
                     </li>
                 </ul>
             </div>
