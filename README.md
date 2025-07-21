@@ -31,6 +31,9 @@ ReconOps Dashboard is a network reconnaissance utility that provides a user-frie
 - **CSRF-Protected Flask-WTF Forms:**  
   Ensures every web form is secure against CSRF attacks.
 
+- **User Authentication:**  
+  Fully implemented user registration, login, logout flows with session management and secure password hashing. Includes responsive UI feedback and user-specific navigation.
+
 - **Nmap Scan Integration:**  
   Quickly perform Nmap scans on domains/IPs and view the output directly in the dashboard.
 
@@ -41,7 +44,7 @@ ReconOps Dashboard is a network reconnaissance utility that provides a user-frie
   Tracks user actions and scan events for basic auditing.
 
 - **Responsive UI with Bootstrap 5:**  
-  Clean interface for laptops and mobile devices.
+  Clean interface for laptops and mobile devices, now including a user dropdown menu with account overview and session controls.
 
 ---
 
@@ -51,12 +54,11 @@ We will focus on implementing the following key features in the next phases of d
 
 ### Next Major Features (In Active Development)
 
-| Feature                  | Why It Matters                                       | Timeline       |
-|--------------------------|------------------------------------------------------|----------------|
-| **User Authentication**  | Realistic access control & user management            | Next major     |
-| **Scan History per User**| Data persistence and personalized audit trail         | In progress    |
+| Feature                   | Why It Matters                                        | Timeline       |
+|---------------------------|------------------------------------------------------|----------------|
+| **Scan History per User** | Data persistence and personalized audit trail         | In progress    |
 | **Result Export (CSV/JSON)** | Provides practical server-side file handling and reporting | Near future    |
-| **Dockerization**         | Modern deployment practices and environment consistency | Near future    |
+| **Dockerization**          | Modern deployment practices and environment consistency | Near future    |
 
 ### Near-Future & Optional Enhancements
 
@@ -66,6 +68,7 @@ We will focus on implementing the following key features in the next phases of d
 | **Simple REST API Endpoints**| Backend extensibility, service-oriented architecture  | Optional  |
 | **Enhanced Audit Logging**  | Improved monitoring, security, and operational insight | Stretch   |
 | **Custom User Settings**     | User experience enhancement and application extensibility | Stretch   |
+| **User Profile Management** | Password reset, email updates, profile pictures         | Stretch   |
 
 ---
 
@@ -98,43 +101,42 @@ Access the app at [http://localhost:5000](http://localhost:5000)
 
 ## Usage
 
-- Enter a target IP or domain and click "Run Scan"
-- View scan results and logs via navigation links
-- All user actions and scan records are saved for traceability
-
-*Note: After planned authentication is added, features will become user-dependent!*
+- Register a new user account or log in with an existing account.
+- Use the dashboard’s navbar dropdown menu to access account settings or logout.
+- Enter a target IP or domain and click "Run Scan".
+- View scan results and logs via navigation links.
+- All user actions and scan records are saved for traceability and audit.
 
 ---
 
 ## Project Structure
 
-reconops-dashboard/
-│
-├── app.py
-├── requirements.txt
-├── reconops_dashboard/
-│ ├── init.py
-│ ├── models.py
-│ ├── routes/
-│ │ ├── main_routes.py
-│ │ └── settings_routes.py
-│ ├── templates/
-│ │ ├── base.html
-│ │ ├── scan.html
-│ │ ├── results.html
-│ │ ├── logs.html
-│ │ └── settings.html
-│ ├── utils/
-│ │ ├── scan_engine.py
-│ │ ├── forms.py
-│ │ ├── db_helper.py
-│ │ ├── log_helper.py
-│ │ └── settings_helper.py
-│ └── static/
-└── instance/
-└── reconops.db
-
-text
+reconops-dashboard/  
+│  
+├── app.py  
+├── requirements.txt  
+├── reconops_dashboard/  
+│ ├── __init__.py  
+│ ├── models.py  
+│ ├── routes/  
+│ │ ├── main_routes.py  
+│ │ └── settings_routes.py  
+│ ├── templates/  
+│ │ ├── base.html  
+│ │ ├── scan.html  
+│ │ ├── results.html  
+│ │ ├── logs.html  
+│ │ ├── settings.html  
+│ │ └── account.html  
+│ ├── utils/  
+│ │ ├── scan_engine.py  
+│ │ ├── forms.py  
+│ │ ├── db_helper.py  
+│ │ ├── log_helper.py  
+│ │ └── settings_helper.py  
+│ └── static/  
+└── instance/  
+  └── reconops.db  
 
 ---
 
@@ -157,4 +159,3 @@ This project is licensed under the MIT License.
 - GitHub: [Specia-cipher](https://github.com/Specia-cipher)  
 - Email: [your.email@example.com]  
 - Project assembled with a focus on robust back-end design, security, and real-world workflows.
-
