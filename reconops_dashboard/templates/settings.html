@@ -4,15 +4,30 @@
 <div class="container mt-5">
     <h2 class="mb-4">⚙️ Dashboard Settings</h2>
     <form method="POST" action="{{ url_for('settings.settings') }}">
+        {{ form.hidden_tag() }}
         <div class="mb-3">
-            <label for="scan_timeout" class="form-label">Scan Timeout (seconds)</label>
-            <input type="number" class="form-control" id="scan_timeout" name="scan_timeout" value="{{ settings.scan_timeout }}" required>
+            {{ form.scan_timeout.label(class="form-label") }}
+            {{ form.scan_timeout(class="form-control", placeholder="Enter scan timeout in seconds", required=True) }}
+            {% if form.scan_timeout.errors %}
+                <div class="text-danger mt-1">
+                    {% for error in form.scan_timeout.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
         <div class="mb-3">
-            <label for="scan_flags" class="form-label">Scan Flags</label>
-            <input type="text" class="form-control" id="scan_flags" name="scan_flags" value="{{ settings.scan_flags }}" required>
+            {{ form.scan_flags.label(class="form-label") }}
+            {{ form.scan_flags(class="form-control", placeholder="Enter nmap scan flags, e.g. -Pn -sV", required=True) }}
+            {% if form.scan_flags.errors %}
+                <div class="text-danger mt-1">
+                    {% for error in form.scan_flags.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
-        <button type="submit" class="btn btn-primary">Save Settings</button>
+        {{ form.submit(class="btn btn-primary") }}
     </form>
 </div>
 {% endblock %}
