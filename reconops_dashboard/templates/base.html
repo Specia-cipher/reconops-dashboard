@@ -59,7 +59,7 @@
                     <div class="block px-4 py-2 text-sm text-gray-400">
                         Logged in as <strong>{{ current_user.username }}</strong>
                     </div>
-                    <a href="{{ url_for('settings.account') }}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">Account Settings</a>
+                    <a href="{{ url_for('settings.settings') }}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">Account Settings</a>
                     <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">Logout</a>
                 </div>
                 {% else %}

@@ -1,13 +1,37 @@
 # reconops_dashboard/forms.py
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField, SubmitField
-from wtforms.validators import DataRequired, NumberRange
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from reconops_dashboard.models import User
 
-class SettingsForm(FlaskForm):
-    scan_timeout = IntegerField('Scan Timeout (seconds)', validators=[DataRequired(), NumberRange(min=1, max=3600)])
-    scan_flags = StringField('Scan Flags', validators=[DataRequired()])
-    submit = SubmitField('Save Settings')
-    
-# New form for API key regeneration
+class RegistrationForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Sign Up')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('That username is taken. Please choose a different one.')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('That email is taken. Please choose a different one.')
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Remember Me')
+    submit = SubmitField('Login')
+
+class ChangePasswordForm(FlaskForm):
+    new_password = PasswordField('New Password', validators=[DataRequired(), Length(min=6)])
+    confirm_password = PasswordField('Confirm New Password', validators=[DataRequired(), EqualTo('new_password')])
+    submit_change_password = SubmitField('Change Password')
+
 class RegenerateApiKeyForm(FlaskForm):
-    pass
+    submit_regenerate_api_key = SubmitField('Regenerate API Key')
+

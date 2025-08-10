@@ -15,6 +15,8 @@ API Development: Foundations for a private REST API.
 Key Features
 Secure Authentication: Complete user registration, login, and logout flows with secure password hashing.
 
+User Password Change: A secure workflow for users to update their passwords.
+
 Nmap Scan Engine: Perform Nmap scans on any domain or IP address.
 
 Customizable Scan Settings: Modify Nmap scan flags and timeouts from the settings page.
@@ -26,13 +28,19 @@ API Key Management: Each user gets a unique, private API key for endpoint authen
 Polished UI: A modern, responsive design using Tailwind CSS.
 
 Planned Roadmap
-We are currently working on the following features:
+We are currently working on the following features, with a special focus on scalability and advanced functionality:
 
-User Password Change: A secure workflow for users to update their passwords.
+Private REST API: Secure API endpoints for programmatic access to scan results and initiating new scans.
 
-Dashboard Analytics: Real-time statistics and visualizations on the main dashboard.
+Dashboard Analytics: Implement real-time statistics and visualizations on the main dashboard to provide deeper insights into scan data.
 
-Private REST API: Secure API endpoints for programmatic access to scan results.
+Scan History and Archiving: A dedicated section to review all past scans, with the ability to filter, search, and archive results.
+
+Scheduled Scans: Functionality to schedule Nmap scans to run automatically at specified times or intervals.
+
+Containerization and Deployment: Complete the Docker containerization process and develop deployment guides for various environments.
+
+Multi-User Collaboration: Enable multiple users to collaborate on projects and share scan data securely.
 
 Installation & Setup
 Prerequisites
@@ -42,25 +50,45 @@ Nmap installed on your system.
 
 Git
 
+Docker (for containerized deployment)
+
 Instructions
-Clone the repository:
+1. Clone the repository:
+
 git clone https://github.com/Specia-cipher/reconops-dashboard.git
 cd reconops-dashboard
 
-Set up a virtual environment:
+2. Set up a virtual environment (if not using Docker):
+
 python3 -m venv venv
 source venv/bin/activate
 
-Install dependencies:
+3. Install dependencies:
+
 pip install -r requirements.txt
 
-Initialize the database:
+4. Initialize the database:
+
 flask db upgrade
 
-Run the application:
+5. Run the application locally (if not using Docker):
+
 python app.py
 
 The app will be accessible at http://localhost:5000.
+
+6. Containerization with Docker (Recommended):
+Alternatively, you can build and run the application in a Docker container for a consistent, isolated environment.
+
+Build the Docker image:
+
+docker build -t reconops-dashboard .
+
+Run the Docker container:
+
+docker run -p 5000:5000 reconops-dashboard
+
+The app will be accessible at http://localhost:5000 from your host machine.
 
 About the Author
 Specia-cipher (Sanni Idris)
