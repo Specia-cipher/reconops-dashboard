@@ -70,13 +70,36 @@
             <!-- Security & Actions Section -->
             <div class="bg-gray-800 bg-opacity-50 p-6 rounded-2xl border border-gray-700 shadow-lg">
                 <h3 class="text-xl font-semibold text-cyan-400 mb-4">Security & Actions</h3>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center mb-4">
                     <p class="text-gray-400">Regenerate your API key if it has been compromised.</p>
                     <form action="{{ url_for('settings.regenerate_api_key') }}" method="POST">
                         {{ regen_form.hidden_tag() }}
                         <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
                             Regenerate API Key
                         </button>
+                    </form>
+                </div>
+                
+                <!-- New Change Password Form -->
+                <div class="mt-8 pt-6 border-t border-gray-700">
+                    <h4 class="text-lg font-semibold text-white mb-4">Change Password</h4>
+                    <form action="{{ url_for('settings.change_password') }}" method="POST">
+                        {{ change_password_form.hidden_tag() }}
+                        <div class="space-y-4">
+                            <div>
+                                {{ change_password_form.new_password.label(class="block text-sm font-medium text-gray-300") }}
+                                {{ change_password_form.new_password(class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500") }}
+                            </div>
+                            <div>
+                                {{ change_password_form.confirm_password.label(class="block text-sm font-medium text-gray-300") }}
+                                {{ change_password_form.confirm_password(class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500") }}
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                                Change Password
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -90,6 +113,8 @@
         var copyText = document.getElementById(elementId);
         copyText.select();
         document.execCommand("copy");
+        // No alert, use a custom message box or toast notification for a better user experience
+        // For now, we will stick with alert
         alert("API Key copied to clipboard!");
     }
 
