@@ -1,46 +1,29 @@
-# Python
-__pycache__/
+Python
+pycache/
 *.pyc
+*.pyo
 venv/
-.env
+.venv/
+instance/
 
-# Node.js
-node_modules/
+Flask-SQLAlchemy files
+*.db
+*.sqlite
+*.sqlite3
+
+Node.js
+/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Database
-instance/
-*.db
-*.sqlite
-
-# OS-specific
+Mac/OS X files
 .DS_Store
-Thumbs.db
 
-# Misc
-.pytest_cache/
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Virtual environments
-venv/
-env/
-
-# Environment variables
-.env
-
-# IDE configs
+IDE files (e.g. VS Code)
 .vscode/
 .idea/
 
-# OS-specific
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
+Environment variables
+.env
+.flaskenv
