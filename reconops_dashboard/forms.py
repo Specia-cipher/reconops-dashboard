@@ -7,4 +7,7 @@ class SettingsForm(FlaskForm):
     scan_timeout = IntegerField('Scan Timeout (seconds)', validators=[DataRequired(), NumberRange(min=1, max=3600)])
     scan_flags = StringField('Scan Flags', validators=[DataRequired()])
     submit = SubmitField('Save Settings')
-
+    
+# New form for API key regeneration
+class RegenerateApiKeyForm(FlaskForm):
+    pass

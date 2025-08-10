@@ -1,33 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="mb-4">⚙️ Dashboard Settings</h2>
-    <form method="POST" action="{{ url_for('settings.settings') }}">
-        {{ form.hidden_tag() }}
-        <div class="mb-3">
-            {{ form.scan_timeout.label(class="form-label") }}
-            {{ form.scan_timeout(class="form-control", placeholder="Enter scan timeout in seconds", required=True) }}
-            {% if form.scan_timeout.errors %}
-                <div class="text-danger mt-1">
-                    {% for error in form.scan_timeout.errors %}
-                        <div>{{ error }}</div>
-                    {% endfor %}
+    <!-- Main content area -->
+    <main class="flex-grow flex items-center justify-center p-8">
+        <!-- Main content card for the settings page -->
+        <div class="frosted-glass max-w-2xl w-full p-8 rounded-3xl shadow-2xl border border-gray-700">
+            <h2 class="text-3xl font-bold text-white mb-6 text-center flex items-center justify-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v20M5 10l7-7 7 7M5 14h14" />
+                </svg>
+                <span>Dashboard Settings</span>
+            </h2>
+            
+            <form method="POST" action="{{ url_for('settings.settings') }}" class="space-y-6">
+                <!-- This line is crucial for Flask-WTF forms and CSRF protection -->
+                {{ form.hidden_tag() }}
+                
+                <!-- Scan Timeout Input Field -->
+                <div>
+                    {{ form.scan_timeout.label(class="block text-gray-300 text-sm font-bold mb-2") }}
+                    {{ form.scan_timeout(class="shadow appearance-none border rounded-lg w-full py-3 px-4 bg-gray-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-400", placeholder="Enter scan timeout in seconds") }}
+                    {% if form.scan_timeout.errors %}
+                        <div class="text-red-400 text-sm mt-1">
+                            {% for error in form.scan_timeout.errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-        </div>
-        <div class="mb-3">
-            {{ form.scan_flags.label(class="form-label") }}
-            {{ form.scan_flags(class="form-control", placeholder="Enter nmap scan flags, e.g. -Pn -sV", required=True) }}
-            {% if form.scan_flags.errors %}
-                <div class="text-danger mt-1">
-                    {% for error in form.scan_flags.errors %}
-                        <div>{{ error }}</div>
-                    {% endfor %}
+                
+                <!-- Scan Flags Input Field -->
+                <div>
+                    {{ form.scan_flags.label(class="block text-gray-300 text-sm font-bold mb-2") }}
+                    {{ form.scan_flags(class="shadow appearance-none border rounded-lg w-full py-3 px-4 bg-gray-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-400", placeholder="Enter nmap scan flags, e.g. -Pn -sV") }}
+                    {% if form.scan_flags.errors %}
+                        <div class="text-red-400 text-sm mt-1">
+                            {% for error in form.scan_flags.errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
+                
+                <!-- Submit Button -->
+                <div>
+                    {{ form.submit(class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline w-full transition-colors flex items-center justify-center space-x-2") }}
+                </div>
+            </form>
         </div>
-        {{ form.submit(class="btn btn-primary") }}
-    </form>
-</div>
+    </main>
 {% endblock %}
