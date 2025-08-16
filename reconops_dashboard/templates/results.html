@@ -2,26 +2,26 @@
 
 {% block content %}
     <!-- Main content area -->
-    <main class="flex-grow flex items-center justify-center p-8">
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-8">
         <!-- Main content card for the results page -->
-        <div class="frosted-glass max-w-full w-full p-8 rounded-3xl shadow-2xl border border-gray-700">
-            <h2 class="text-3xl font-bold text-white mb-6 text-center">Scan Results</h2>
+        <div class="frosted-glass max-w-full w-full p-6 sm:p-8 rounded-3xl shadow-2xl border border-gray-700">
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 text-center">Scan Results</h2>
 
             <!-- Table Container for responsiveness -->
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-700">
-                    <thead class="bg-gray-800">
+                    <thead class="bg-gray-800 hidden sm:table-header-group">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 ID
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Target
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Timestamp
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Output
                             </th>
                         </tr>
@@ -29,19 +29,23 @@
                     <tbody class="bg-gray-900 divide-y divide-gray-700">
                         <!-- Loop through scan results using the correct variable name 'scans' -->
                         {% for result in scans %}
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200">
+                        <tr class="flex flex-col sm:table-row">
+                            <td class="px-4 py-2 sm:py-4 text-sm font-medium text-gray-200">
+                                <span class="block sm:hidden text-xs text-gray-400 uppercase">ID:</span>
                                 {{ result.id }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            <td class="px-4 py-2 sm:py-4 text-sm text-gray-300">
+                                <span class="block sm:hidden text-xs text-gray-400 uppercase">Target:</span>
                                 {{ result.target }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            <td class="px-4 py-2 sm:py-4 text-sm text-gray-300">
+                                <span class="block sm:hidden text-xs text-gray-400 uppercase">Timestamp:</span>
                                 {{ result.created_at }}
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-300">
+                            <td class="px-4 py-2 sm:py-4 text-sm text-gray-300 break-words overflow-x-auto">
+                                <span class="block sm:hidden text-xs text-gray-400 uppercase">Output:</span>
                                 <!-- FIX: The variable name is now correctly 'result.scan_output' -->
-                                <pre class="bg-gray-800 text-gray-200 p-2 rounded-md text-xs overflow-x-auto">{{ result.scan_output }}</pre>
+                                <pre class="bg-gray-800 text-gray-200 p-2 rounded-md text-xs break-words whitespace-pre-wrap">{{ result.scan_output }}</pre>
                             </td>
                         </tr>
                         {% endfor %}
