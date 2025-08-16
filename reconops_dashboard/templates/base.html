@@ -30,46 +30,68 @@
 <body class="gradient-background text-gray-100 min-h-screen flex flex-col">
 
     <!-- Navbar -->
-    <nav class="w-full bg-gray-800 bg-opacity-70 backdrop-blur-lg px-4 py-4 flex justify-between items-center shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
-            <!-- Logo and App Name -->
-            <a class="flex items-center space-x-2 text-2xl font-bold tracking-wide text-cyan-400 mb-2 sm:mb-0" href="{{ url_for('main.home') }}">
+    <nav class="w-full bg-gray-800 bg-opacity-70 backdrop-blur-lg px-4 py-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Left side: Logo -->
+            <a class="flex items-center space-x-2 text-2xl font-bold tracking-wide text-cyan-400" href="{{ url_for('main.home') }}">
                 🕵️‍️ ReconOps
             </a>
             
-            <!-- Conditional Navigation Links -->
+            <!-- Right side: Nav links and user menu -->
             <div class="flex items-center space-x-4">
                 {% if current_user.is_authenticated %}
-                    <a class="nav-link text-gray-400 hover:text-cyan-400 transition-colors hidden sm:block" href="{{ url_for('main.scan') }}">Scan</a>
-                    <a class="nav-link text-gray-400 hover:text-cyan-400 transition-colors hidden sm:block" href="{{ url_for('main.results') }}">Results</a>
-                    <a class="nav-link text-gray-400 hover:text-cyan-400 transition-colors hidden sm:block" href="{{ url_for('main.logs') }}">Logs</a>
-                    <a class="nav-link text-gray-400 hover:text-cyan-400 transition-colors hidden sm:block" href="{{ url_for('settings.settings') }}">Settings</a>
-                {% endif %}
+                <!-- Desktop Navigation Links (visible on small screens and up) -->
+                <div class="hidden sm:flex space-x-4">
+                    <a class="nav-link text-gray-400 hover:text-cyan-400 transition-colors" href="{{ url_for('main.scan') }}">Scan</a>
+                    <a class="nav-link text-gray-400 hover:text-cyan-400 transition-colors" href="{{ url_for('main.results') }}">Results</a>
+                    <a class="nav-link text-gray-400 hover:text-cyan-400 transition-colors" href="{{ url_for('main.logs') }}">Logs</a>
+                    <a class="nav-link text-gray-400 hover:text-cyan-400 transition-colors" href="{{ url_for('settings.settings') }}">Settings</a>
+                </div>
 
-                <!-- Conditional User/Auth Links -->
+                <!-- User Dropdown (visible on all screens) -->
                 <div class="relative group">
-                    {% if current_user.is_authenticated %}
-                    <a class="text-gray-200 hover:text-white cursor-pointer transition-colors" id="userDropdown" role="button">
-                        {{ current_user.username }}
-                    </a>
-                    <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
+                    <button id="userDropdownBtn" class="flex items-center space-x-2 text-gray-200 hover:text-white transition-colors cursor-pointer">
+                        <span class="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </span>
+                        <span class="hidden sm:inline">{{ current_user.username }}</span>
+                    </button>
+                    <div id="userDropdownMenu" class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-2 z-10 hidden frosted-glass border border-gray-700">
                         <div class="block px-4 py-2 text-sm text-gray-400">
                             Logged in as <strong>{{ current_user.username }}</strong>
                         </div>
-                        <a href="{{ url_for('settings.settings') }}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">Account Settings</a>
-                        <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">Logout</a>
+                        <a href="{{ url_for('settings.settings') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Account Settings</a>
+                        <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Logout</a>
                     </div>
-                    {% else %}
-                    <div class="flex space-x-4">
-                        <a class="nav-link text-gray-200 hover:text-white" href="{{ url_for('auth.login') }}">Login</a>
-                        <a class="nav-link text-gray-200 hover:text-white" href="{{ url_for('auth.register') }}">Register</a>
-                    </div>
-                    {% endif %}
                 </div>
+
+                <!-- Mobile menu toggle button (visible on mobile, hidden on small screens and up) -->
+                <button id="mobile-menu-toggle" class="sm:hidden text-gray-400 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                {% else %}
+                <!-- Auth links for non-authenticated users -->
+                <div class="flex space-x-4">
+                    <a class="nav-link text-gray-200 hover:text-white" href="{{ url_for('auth.login') }}">Login</a>
+                    <a class="nav-link text-gray-200 hover:text-white" href="{{ url_for('auth.register') }}">Register</a>
+                </div>
+                {% endif %}
             </div>
         </div>
+        
+        <!-- Mobile Navigation Menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden sm:hidden py-4 text-center space-y-2">
+            {% if current_user.is_authenticated %}
+            <a class="nav-link block text-gray-400 hover:text-cyan-400 transition-colors" href="{{ url_for('main.scan') }}">Scan</a>
+            <a class="nav-link block text-gray-400 hover:text-cyan-400 transition-colors" href="{{ url_for('main.results') }}">Results</a>
+            <a class="nav-link block text-gray-400 hover:text-cyan-400 transition-colors" href="{{ url_for('main.logs') }}">Logs</a>
+            <a class="nav-link block text-gray-400 hover:text-cyan-400 transition-colors" href="{{ url_for('settings.settings') }}">Settings</a>
+            {% endif %}
+        </div>
     </nav>
-
+    
     <!-- Main content area -->
     <main class="flex-grow flex items-center justify-center p-4 sm:p-8">
         {% block content %}{% endblock %}
@@ -80,22 +102,34 @@
         © 2025 ReconOps | Built with <span class="text-red-500">❤️</span> by Sanni Idris
     </footer>
 
-    <!-- This script handles the user dropdown menu without needing Bootstrap's JS -->
+    <!-- This script handles the user dropdown menu and mobile menu toggle -->
     <script>
-        const userDropdown = document.getElementById('userDropdown');
-        if (userDropdown) {
-            const dropdownMenu = document.getElementById('dropdown-menu');
-            userDropdown.addEventListener('click', () => {
-                dropdownMenu.classList.toggle('opacity-0');
-                dropdownMenu.classList.toggle('pointer-events-none');
-            });
-            document.addEventListener('click', (event) => {
-                if (!userDropdown.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.classList.add('opacity-0');
-                    dropdownMenu.classList.add('pointer-events-none');
-                }
-            });
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const userDropdownBtn = document.getElementById('userDropdownBtn');
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Toggle user dropdown visibility
+            if (userDropdownBtn && userDropdownMenu) {
+                userDropdownBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    userDropdownMenu.classList.toggle('hidden');
+                });
+                document.addEventListener('click', (event) => {
+                    if (!userDropdownBtn.contains(event.target) && !userDropdownMenu.contains(event.target)) {
+                        userDropdownMenu.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Toggle mobile navigation menu visibility
+            if (mobileMenuToggle && mobileMenu) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
     </script>
 </body>
 </html>
